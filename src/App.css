@@ -1,0 +1,14 @@
+#root {
+  font-family:'Poppins';
+}
+body{
+  margin: 0%;
+}
+
+.auth {
+  background-image: url("./assets/img/slide19.jpg");
+  background-color: aquamarine;
+  height: 100%;
+  width: max-content;
+  box-sizing: border-box;
+}
