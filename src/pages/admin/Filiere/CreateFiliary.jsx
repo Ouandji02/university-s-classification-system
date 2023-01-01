@@ -13,32 +13,17 @@ import { db, storage } from "../../../Firebase";
 import { addDocument, addDocumentWithoutImage, deleteDocument } from "../../../services/services";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { FILIARY } from "../../../constantes/Const";
+import { useParams } from "react-router-dom";
 
 export default function CreateFiliary() {
-  const [data, setData] = useState({});
+  const id = useParams().id;
+  const [data, setData] = useState({idFaculty: id});
   const [items, setItems] = useState([]);
   const handleChange = (e) => {
     var name = e.target.name;
     var value = e.target.value;
     setData((prevState) => ({ ...prevState, [name]: value }));
   };
-
-  useEffect(() => {
-    const getDocuments = getDocs(collection(db, FILIARY), orderBy("created"))
-      .then((docs) => {
-        var listItems = [];
-        docs.forEach((doc) => {
-          console.log(doc.data());
-          listItems.push({ ...doc.data(), id: doc.id });
-        });
-        setItems(docs.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        console.log("hjgfghjklkjhgfddghjkl", items);
-      })
-      .catch((error) => {
-        console.log("echoue");
-      });
-    return () => getDocuments;
-  }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();

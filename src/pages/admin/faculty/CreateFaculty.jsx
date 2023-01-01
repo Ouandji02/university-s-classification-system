@@ -9,41 +9,31 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { db, storage } from "../../../Firebase";
-import { addDocument, addDocumentWithoutImage, deleteDocument } from "../../../services/services";
+import {
+  addDocument,
+  addDocumentWithoutImage,
+  deleteDocument,
+} from "../../../services/services";
 import { FACULTY } from "../../../constantes/Const";
+import { useParams } from "react-router-dom";
 
 export default function CreateFaculty() {
-  const [data, setData] = useState({});
+  const id = useParams().id;
+  const [data, setData] = useState({ idUniversity: id });
   const [items, setItems] = useState([]);
+
   const handleChange = (e) => {
     var name = e.target.name;
     var value = e.target.value;
     setData((prevState) => ({ ...prevState, [name]: value }));
-    console.log(data)
+    console.log(data);
   };
-
-  useEffect(() => {
-    const getDocuments = getDocs(collection(db, FACULTY), orderBy("created"))
-      .then((docs) => {
-        var listItems = [];
-        docs.forEach((doc) => {
-          console.log(doc.data());
-          listItems.push({ ...doc.data(), id: doc.id });
-        });
-        setItems(docs.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        console.log("hjgfghjklkjhgfddghjkl", items);
-      })
-      .catch((error) => {
-        console.log("echoue");
-      });
-    return () => getDocuments;
-  }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
     var tab = items;
     tab.push(data);
-    addDocumentWithoutImage(FACULTY, data).catch(error => alert("echouee"));
+    addDocumentWithoutImage(FACULTY, data).catch((error) => alert("echouee"));
   };
 
   console.log("renderrrrrrrrrrrrrrrrrkk", data);
@@ -105,7 +95,7 @@ export default function CreateFaculty() {
           </Box>
           <Box sx={{ mt: 2 }}>
             <Typography variant="h6" sx={{ mb: 2 }}>
-            Description de l'universite
+              Description de l'universite
             </Typography>
             <TextField
               type={"text"}

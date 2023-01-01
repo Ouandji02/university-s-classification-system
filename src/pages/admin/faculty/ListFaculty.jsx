@@ -50,13 +50,14 @@ export default function ListFaculty() {
       .then((docs) => {
         var listItems = [];
         docs.forEach((doc) => {
-          listItems.push({
-            id: doc.id,
-            name: doc.data().title,
-            nbreLabo: doc.data().nbreLabo,
-            phone: doc.data().phone,
-            email: doc.data().email,
-          });
+          if (doc.data().idUniversity === id)
+            listItems.push({
+              id: doc.id,
+              name: doc.data().title,
+              nbreLabo: doc.data().nbreLabo,
+              phone: doc.data().phone,
+              email: doc.data().email,
+            });
         });
         console.log("sadkjfffffffffffffffffff", listItems);
         settableData(listItems);

@@ -72,6 +72,11 @@ function AppBarResponsive({ children, connect }) {
       icon: <Dashboard color="secondary" />,
       path: "/admin/createcritere",
     },
+    {
+      text: "Voter une universite",
+      icon: <Dashboard color="secondary" />,
+      path: "/admin/vote",
+    },
   ];
   const drawer = (
     <div>
@@ -88,6 +93,11 @@ function AppBarResponsive({ children, connect }) {
         </Divider>
         {menuItems.map((element, index) => (
           <>
+          {index == 3 ? (
+              <Divider textAlign="left" sx={{ m: 2 }}>
+                Vote
+              </Divider>
+            ) : null}
             <ListItem
               key={index}
               disablePadding

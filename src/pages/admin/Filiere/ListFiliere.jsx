@@ -5,6 +5,7 @@ import MUIDataTable from "mui-datatables";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { FILIARY, UNIVERSITY } from "../../../constantes/Const";
 import { db } from "../../../Firebase";
@@ -49,21 +50,23 @@ export default function ListFiliary() {
 
   const [tableData, settableData] = useState([]);
   const id = useParams().id;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getDocuments = getDocs(collection(db, FILIARY), orderBy("created"))
       .then((docs) => {
         var listItems = [];
         docs.forEach((doc) => {
-          listItems.push({
-            ID: doc.id,
-            name: doc.data().title,
-            article: doc.data().nbreArticle,
-            tr: doc.data().tauxReussite,
-            nbreEtudiants: doc.data().nbreEtudiant,
-            phone: doc.data().phone,
-            email: doc.data().email,
-          });
+          if (doc.data().idFiliary === id)
+            listItems.push({
+              ID: doc.id,
+              name: doc.data().title,
+              article: doc.data().nbreArticle,
+              tr: doc.data().tauxReussite,
+              nbreEtudiants: doc.data().nbreEtudiant,
+              phone: doc.data().phone,
+              email: doc.data().email,
+            });
         });
         console.log("sadkjfffffffffffffffffff", listItems);
         settableData(listItems);
