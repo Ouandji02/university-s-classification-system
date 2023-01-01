@@ -66,6 +66,15 @@ export default function CreateCritere() {
               onChange={handleChange}
             />
           </Box>
+          <Box sx={{mt:2}}>
+          <TextField
+              type={"text"}
+              name="function"
+              placeholder="Entrer la fonction du critere"
+              fullWidth
+              onChange={handleChange}
+            />
+          </Box>
           <Box sx={{ mt: 2, textAlign: "right" }}>
             <Button type="submit" variant="contained" color="primary">
               Enregistrer

@@ -73,6 +73,11 @@ function AppBarResponsive({ children, connect }) {
       path: "/admin/createcritere",
     },
     {
+      text: "Classification des universites",
+      icon: <Dashboard color="secondary" />,
+      path: "/admin/classification",
+    },
+    {
       text: "Voter une universite",
       icon: <Dashboard color="secondary" />,
       path: "/admin/vote",
@@ -93,7 +98,7 @@ function AppBarResponsive({ children, connect }) {
         </Divider>
         {menuItems.map((element, index) => (
           <>
-          {index == 3 ? (
+          {index == 4 ? (
               <Divider textAlign="left" sx={{ m: 2 }}>
                 Vote
               </Divider>

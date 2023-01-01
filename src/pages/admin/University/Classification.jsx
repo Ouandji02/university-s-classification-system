@@ -1,35 +1,20 @@
-import { Button } from "@mui/material";
-import {
-  collection,
-  doc,
-  getDocs,
-  orderBy,
-  updateDoc,
-} from "firebase/firestore/lite";
+import { Chip } from "@mui/material";
+import { Box } from "@mui/material";
+import { collection, getDocs, orderBy } from "firebase/firestore/lite";
 import MUIDataTable from "mui-datatables";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UNIVERSITY } from "../../../constantes/Const";
-import { useFirebaseAuthContext } from "../../../context/AuthContext";
 import { db } from "../../../Firebase";
 
-const Vote = () => {
+export default function Classification() {
   const naviagate = useNavigate();
-  const user = useFirebaseAuthContext();
-  console.log("jdksghhkjlksdjjhjsjkklsdhkj", user);
   const options = {
     filterType: "checkbox",
-    onRowClick: async (rowData, e) => {
-      if (user.vote === true)
-        await updateDoc(doc(db, UNIVERSITY, rowData[4]), {
-          vote: 1,
-        }).then((res) =>
-          updateDoc(doc(db, "user", user.uid), {
-            voter: true,
-          })
-        );
+    onRowClick: (rowData, e) => {
+      naviagate(`/admin/faculty/${rowData[4]}`);
     },
   };
   const columns = [
@@ -53,16 +38,13 @@ const Vote = () => {
       name: "id",
       label: "id",
     },
-    {
-      name: "actions",
-      label: "actions",
-    },
   ];
 
   const [tableData, settableData] = useState([]);
+  const [chipsClicked,setChipsClicked] = useState(0)
 
   useEffect(() => {
-    const getDocuments = getDocs(collection(db, UNIVERSITY), orderBy("created"))
+    const getDocuments = getDocs(collection(db, UNIVERSITY), orderBy("vote"))
       .then((docs) => {
         var listItems = [];
         docs.forEach((doc) => {
@@ -72,11 +54,6 @@ const Vote = () => {
             region: doc.data().region,
             phone: doc.data().phone,
             email: doc.data().email,
-            actions: (
-              <Button variant="contained" disabled={user.voter ? true : false}>
-                Voter
-              </Button>
-            ),
           });
         });
         console.log("sadkjfffffffffffffffffff", listItems);
@@ -88,14 +65,37 @@ const Vote = () => {
     return () => getDocuments;
   }, []);
 
+  const chips = [
+    {
+      name: "tout",
+      fonction: "",
+    },
+    {
+      name: "Taux de reussite",
+      fonction: "",
+    },
+    {
+      name: "Renomme",
+      fonction: "",
+    },
+    {
+      name: "Labo",
+      fonction: "",
+    },
+  ];
+
   return (
     <>
       <div>
-        <h1>Choisir votre universite pour voter</h1>
-        {
-            user.voter ? <Button variant="outlined" color="error">Vous avez deja vote</Button> : null
-        }
-        
+        <h1>Classement</h1>
+        <Box sx={{ my: 2 }}>
+          Critere :
+          <Box sx={{ display: "flex" }}>
+            {chips.map((item, index) => (
+              <Chip label={item.name} variant={chipsClicked === index ? "contained" : "outlined"} sx={{ mx: 2 }} onClick={()=>setChipsClicked(index)}/>
+            ))}
+          </Box>
+        </Box>
       </div>
       <MUIDataTable
         title="Liste des universites"
@@ -105,6 +105,4 @@ const Vote = () => {
       />
     </>
   );
-};
-
-export default Vote;
+}

@@ -11,6 +11,7 @@ import CreateFaculty from '../pages/admin/faculty/CreateFaculty'
 import ListFaculty from '../pages/admin/faculty/ListFaculty'
 import CreateFiliary from '../pages/admin/Filiere/CreateFiliary'
 import ListFiliary from '../pages/admin/Filiere/ListFiliere'
+import Classification from '../pages/admin/University/Classification'
 import CreateUniversity from '../pages/admin/University/CreateUniversity'
 import Vote from '../pages/admin/vote/Vote'
 import Auth from '../pages/Auth'
@@ -32,6 +33,7 @@ export default function Main() {
             <Route path='/admin/faculty/:id' element={< ListFaculty />} />
             <Route path='/admin/filiary/:id' element={< ListFiliary />} />
             <Route path='/admin/vote' element={< Vote />} />
+            <Route path='/admin/classification' element={< Classification />} />
             <Route path='' element={<Command />} />
           </Route>
         </Routes>
