@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { UNIVERSITY } from "../../../constantes/Const";
 import { db } from "../../../Firebase";
 
-export default function Command() {
+export default function ListUniversity(){
   const naviagate = useNavigate()
   const options = {
     filterType: 'checkbox',
@@ -36,6 +36,10 @@ export default function Command() {
       name : "id",
       label : "id"
     },
+    {
+      name : "logo",
+      label : "logo"
+    },
   ];
   
   const [tableData, settableData] = useState([]);
@@ -50,7 +54,8 @@ export default function Command() {
             name : doc.data().title,
             region : doc.data().region,
             phone : doc.data().phone,
-            email : doc.data().email 
+            email : doc.data().email,
+            logo: <img src={doc.data().image} height={40} width={40} />
           });
         });
         console.log("sadkjfffffffffffffffffff",listItems)

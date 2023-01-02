@@ -8,7 +8,6 @@ import { collection, getDocs, orderBy } from "firebase/firestore/lite";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import ItemCard from "../../../components/ItemCard";
 import { UNIVERSITY } from "../../../constantes/Const";
 import { db, storage } from "../../../Firebase";
 import { addDocument, deleteDocument } from "../../../services/services";
@@ -16,7 +15,7 @@ import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateUniversity() {
-  const [data, setData] = useState({});
+  const [data, setData] = useState({vote : 0, renomme : 0});
   const [items, setItems] = useState([]);
   const navigate = useNavigate()
   const handleChange = (e) => {

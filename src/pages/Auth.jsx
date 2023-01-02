@@ -44,7 +44,7 @@ export default function Auth() {
         }}
       >
         <Card sx={{ height: "400px", maxWidth: "350px", p: 3 }} elevation={2}>
-          <img src={imgLogo} alt="logo" />
+          <img src={imgLogo} alt="logo" height={70} />
           <Typography sx={{ mt: 2, mb: 2 }} variant="h6" align="center">
             Connectez-vous et consulter vos activites
           </Typography>

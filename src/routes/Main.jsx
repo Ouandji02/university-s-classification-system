@@ -5,13 +5,13 @@ import { Route } from 'react-router-dom'
 import { Routes } from 'react-router-dom'
 import AppBarResponsive from '../components/AppBar'
 import { useFirebaseAuthContext } from '../context/AuthContext'
-import Command from '../pages/admin/command/Command'
 import CreateCritere from '../pages/admin/criteres/CreateCritere'
 import CreateFaculty from '../pages/admin/faculty/CreateFaculty'
 import ListFaculty from '../pages/admin/faculty/ListFaculty'
 import CreateFiliary from '../pages/admin/Filiere/CreateFiliary'
 import ListFiliary from '../pages/admin/Filiere/ListFiliere'
 import Classification from '../pages/admin/University/Classification'
+import ListUniversity from '../pages/admin/University/ListUniversity'
 import CreateUniversity from '../pages/admin/University/CreateUniversity'
 import Vote from '../pages/admin/vote/Vote'
 import Auth from '../pages/Auth'
@@ -34,7 +34,7 @@ export default function Main() {
             <Route path='/admin/filiary/:id' element={< ListFiliary />} />
             <Route path='/admin/vote' element={< Vote />} />
             <Route path='/admin/classification' element={< Classification />} />
-            <Route path='' element={<Command />} />
+            <Route path='' element={<ListUniversity />} />
           </Route>
         </Routes>
       </AppBarResponsive>

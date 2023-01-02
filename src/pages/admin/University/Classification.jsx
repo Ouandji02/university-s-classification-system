@@ -38,13 +38,17 @@ export default function Classification() {
       name: "id",
       label: "id",
     },
+    {
+      name: "logo",
+      label: "logo",
+    },
   ];
 
   const [tableData, settableData] = useState([]);
   const [chipsClicked,setChipsClicked] = useState(0)
 
   useEffect(() => {
-    const getDocuments = getDocs(collection(db, UNIVERSITY), orderBy("vote"))
+    const getDocuments = getDocs(collection(db, UNIVERSITY), orderBy("vote","desc"))
       .then((docs) => {
         var listItems = [];
         docs.forEach((doc) => {
@@ -54,6 +58,7 @@ export default function Classification() {
             region: doc.data().region,
             phone: doc.data().phone,
             email: doc.data().email,
+            logo: <img src={doc.data().image} height={40} width={40} />
           });
         });
         console.log("sadkjfffffffffffffffffff", listItems);

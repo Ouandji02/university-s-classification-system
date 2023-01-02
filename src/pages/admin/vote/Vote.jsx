@@ -21,16 +21,7 @@ const Vote = () => {
   console.log("jdksghhkjlksdjjhjsjkklsdhkj", user);
   const options = {
     filterType: "checkbox",
-    onRowClick: async (rowData, e) => {
-      if (user.vote === true)
-        await updateDoc(doc(db, UNIVERSITY, rowData[4]), {
-          vote: 1,
-        }).then((res) =>
-          updateDoc(doc(db, "user", user.uid), {
-            voter: true,
-          })
-        );
-    },
+    onRowClick: async (rowData, e) => {},
   };
   const columns = [
     {
@@ -50,6 +41,10 @@ const Vote = () => {
       label: "Email",
     },
     {
+      name: "vote",
+      label: "vote",
+    },
+    {
       name: "id",
       label: "id",
     },
@@ -62,7 +57,7 @@ const Vote = () => {
   const [tableData, settableData] = useState([]);
 
   useEffect(() => {
-    const getDocuments = getDocs(collection(db, UNIVERSITY), orderBy("created"))
+    const getDocuments = getDocs(collection(db, UNIVERSITY), orderBy("vote","desc"))
       .then((docs) => {
         var listItems = [];
         docs.forEach((doc) => {
@@ -72,8 +67,28 @@ const Vote = () => {
             region: doc.data().region,
             phone: doc.data().phone,
             email: doc.data().email,
+            vote: doc.data().vote,
             actions: (
-              <Button variant="contained" disabled={user.voter ? true : false}>
+              <Button
+                variant="contained"
+                disabled={user.voter ? true : false}
+                onClick={async () => {
+                  await updateDoc(doc(db, UNIVERSITY, doc.id), {
+                    vote: doc.data().vote + 1,
+                    renomme : doc.data().renomme + 1
+                  })
+                    .then((res) =>
+                      updateDoc(doc(db, "user", user.uid), {
+                        voter: true,
+                      })
+                        .then((res) => alert("Vous avez voté"))
+                        .catch((err) =>
+                          alert("le vote n'a pas été pris en compte")
+                        )
+                    )
+                    .catch((err) => alert("une erreur est survenue"));
+                }}
+              >
                 Voter
               </Button>
             ),
@@ -92,10 +107,11 @@ const Vote = () => {
     <>
       <div>
         <h1>Choisir votre universite pour voter</h1>
-        {
-            user.voter ? <Button variant="outlined" color="error">Vous avez deja vote</Button> : null
-        }
-        
+        {user.voter ? (
+          <Button variant="outlined" color="error">
+            Vous avez deja vote
+          </Button>
+        ) : null}
       </div>
       <MUIDataTable
         title="Liste des universites"
