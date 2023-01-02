@@ -45,10 +45,14 @@ export default function Classification() {
   ];
 
   const [tableData, settableData] = useState([]);
-  const [chipsClicked,setChipsClicked] = useState(0)
+  const [chipsClicked, setChipsClicked] = useState(0);
+  const [chipsSelected, setChipsSelected] = useState("vote");
 
   useEffect(() => {
-    const getDocuments = getDocs(collection(db, UNIVERSITY), orderBy("vote","desc"))
+    const getDocuments = getDocs(
+      collection(db, UNIVERSITY),
+      orderBy("title", "desc")
+    )
       .then((docs) => {
         var listItems = [];
         docs.forEach((doc) => {
@@ -58,7 +62,7 @@ export default function Classification() {
             region: doc.data().region,
             phone: doc.data().phone,
             email: doc.data().email,
-            logo: <img src={doc.data().image} height={40} width={40} />
+            logo: <img src={doc.data().image} height={40} width={40} />,
           });
         });
         console.log("sadkjfffffffffffffffffff", listItems);
@@ -68,24 +72,24 @@ export default function Classification() {
         console.log("echoue");
       });
     return () => getDocuments;
-  }, []);
+  }, [chipsSelected]);
 
   const chips = [
     {
       name: "tout",
-      fonction: "",
+      fonction: "tout",
     },
     {
       name: "Taux de reussite",
-      fonction: "",
+      fonction: "tauxReussite",
     },
     {
       name: "Renomme",
-      fonction: "",
+      fonction: "renomme",
     },
     {
       name: "Labo",
-      fonction: "",
+      fonction: "nbreLabo",
     },
   ];
 
@@ -97,7 +101,15 @@ export default function Classification() {
           Critere :
           <Box sx={{ display: "flex" }}>
             {chips.map((item, index) => (
-              <Chip label={item.name} variant={chipsClicked === index ? "contained" : "outlined"} sx={{ mx: 2 }} onClick={()=>setChipsClicked(index)}/>
+              <Chip
+                label={item.name}
+                variant={chipsClicked === index ? "contained" : "outlined"}
+                sx={{ mx: 2 }}
+                onClick={() => {
+                  setChipsClicked(index);
+                  setChipsSelected(item.fonction)
+                }}
+              />
             ))}
           </Box>
         </Box>
@@ -105,7 +117,8 @@ export default function Classification() {
       <MUIDataTable
         title="Liste des universites"
         columns={columns}
-        data={tableData}
+        data={tableData.sort((a,b) => (a[chipsSelected] > b[chipsSelected]) ? 1 : ((b[chipsSelected] > a[chipsSelected]) ? -1 : 0))
+        }
         options={options}
       />
     </>

@@ -43,7 +43,7 @@ export default function CreateUniversity() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    var file = e.target[17].files[0];
+    var file = e.target[21].files[0];
     addDocument(UNIVERSITY, data, file).then(res => navigate("/admin"));
   };
 
@@ -124,6 +124,30 @@ export default function CreateUniversity() {
               type={"text"}
               name="nobel"
               placeholder="Entrer le nombre de prix nobel"
+              fullWidth
+              onChange={handleChange}
+            />
+          </Box>
+          <Box sx={{ mt: 2 }}>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+            Entrer le taux de reussite
+            </Typography>
+            <TextField
+              type={"text"}
+              name="tauxReussite"
+              placeholder="Entrer le taux de reussite"
+              fullWidth
+              onChange={handleChange}
+            />
+          </Box>
+          <Box sx={{ mt: 2 }}>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+            Entrer le nombre total de laboratoire
+            </Typography>
+            <TextField
+              type={"text"}
+              name="nbreLabo"
+              placeholder="Entrer le nombre total de laboratoire"
               fullWidth
               onChange={handleChange}
             />

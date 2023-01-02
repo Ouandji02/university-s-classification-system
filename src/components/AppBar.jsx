@@ -18,7 +18,7 @@ import { DomainSharp } from "@mui/icons-material";
 import { AdminPanelSettings } from "@mui/icons-material";
 import { Forum } from "@mui/icons-material";
 import { Settings } from "@mui/icons-material";
-import img from "../assets/img/logo-removebg-preview.png";
+import img from "../assets/img/logo.png";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { ExitToApp } from "@mui/icons-material";
@@ -88,7 +88,7 @@ function AppBarResponsive({ children, connect }) {
       <Box sx={{ m: 2 }}>
         <Typography variant="h4" position={"center"}>
           <center>
-            <img src={img} style={{ height: 60 }} />
+            <img src={img} style={{ height: 40 }} />
           </center>
         </Typography>
       </Box>
@@ -154,7 +154,7 @@ function AppBarResponsive({ children, connect }) {
           </IconButton>
           <Typography sx={{ flexGrow: 1 }}>
             {" "}
-            {format(new Date(), "EEEE do MMMM yyyy", "french")}
+            { !mobileOpen ? null : format(new Date(), "EEEE do MMMM yyyy", "french")}
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center", mr: 5 }}>
             <Avatar sx={{ mr: 2, height: 25, width: 25 }} />

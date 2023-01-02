@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import { TextField } from "@mui/material";
+import { Chip } from "@mui/material";
 import { Button } from "@mui/material";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/material";
@@ -11,7 +12,11 @@ import { useState } from "react";
 import ItemCard from "../../../components/ItemCard";
 import { BANNER } from "../../../constantes/Const";
 import { db, storage } from "../../../Firebase";
-import { addDocument, addDocumentWithoutImage, deleteDocument } from "../../../services/services";
+import {
+  addDocument,
+  addDocumentWithoutImage,
+  deleteDocument,
+} from "../../../services/services";
 
 export default function CreateCritere() {
   const [data, setData] = useState({});
@@ -66,8 +71,8 @@ export default function CreateCritere() {
               onChange={handleChange}
             />
           </Box>
-          <Box sx={{mt:2}}>
-          <TextField
+          <Box sx={{ mt: 2 }}>
+            <TextField
               type={"text"}
               name="function"
               placeholder="Entrer la fonction du critere"
@@ -89,12 +94,14 @@ export default function CreateCritere() {
           </Typography>
           <Grid container spacing={2}>
             {items.map((element, key) => (
-              <ItemCard
-                item={element}
-                key={key}
-                onClick={() => {
-                  deleteDocument(BANNER, element.id);
-                }}
+              <Chip
+                label={element.title}
+                onDelete={() =>
+                  deleteDocument("critere", element.id)
+                    .then((res) => alert("supprimer"))
+                    .catch((err) => alert("une erreur s'est produite"))
+                }
+                sx={{mx:1}}
               />
             ))}
           </Grid>
