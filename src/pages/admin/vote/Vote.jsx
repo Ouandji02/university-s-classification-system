@@ -18,6 +18,7 @@ import { db } from "../../../Firebase";
 const Vote = () => {
   const naviagate = useNavigate();
   const user = useFirebaseAuthContext();
+  const [reload, setRelaod] = useState(false);
   console.log("jdksghhkjlksdjjhjsjkklsdhkj", user);
   const options = {
     filterType: "checkbox",
@@ -72,16 +73,15 @@ const Vote = () => {
               <Button
                 variant="contained"
                 disabled={user.voter ? true : false}
-                onClick={async () => {
-                  await updateDoc(doc(db, UNIVERSITY, doc.id), {
-                    vote: doc.data().vote + 1,
-                    renomme : doc.data().renomme + 1
+                onClick={ () => {
+                 updateDoc(doc(db, UNIVERSITY, doc.id), {
+                    vote: 1
                   })
                     .then((res) =>
                       updateDoc(doc(db, "user", user.uid), {
                         voter: true,
                       })
-                        .then((res) => alert("Vous avez voté"))
+                      .then((res) => {alert("Vous avez voté")})
                         .catch((err) =>
                           alert("le vote n'a pas été pris en compte")
                         )
@@ -101,7 +101,7 @@ const Vote = () => {
         console.log("echoue");
       });
     return () => getDocuments;
-  }, []);
+  }, [reload]);
 
   return (
     <>
